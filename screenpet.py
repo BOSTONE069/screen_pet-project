@@ -15,7 +15,41 @@ def blink():#This is a function for timing the blinking of the eyes
     toggle_eyes()
     win.after(250,toggle_eyes)
     win.after(3000,blink)
+
+def toggle_pupils():
+    if not c.crossed_eyes:
+        c.move(pupil_left , 10,-5)
+        c.move(pupil_right , -10,-5)
+        c.crossed_eyes=True
+    else:
+        c.move(pupil_left, -10, 5)
+        c.move(pupil_right, 10, 5)
+        c.crossed_eyes = False
+
+def toggle_tongue():
+    if not c.tongue_out: 
+        c.itemconfigure(tongue_tip , state = NORMAL) 
+        c.itemconfigure(tongue_main , state = NORMAL)
+        c.tongue_out = True 
+    else:
+        c.itemconfigure(tongue_tip , state = HIDDEN) 
+        c.itemconfigure(tongue_main , state = HIDDEN)
+        c.tongue_out = False
+             
+def cheeky(event):
+    toggle_tongue()
+    toggle_pupils()
+    hide_happy(event)
+    win.after(1000, toggle_tongue)
+    win.after(1000,toggle_pupils)
+    return
+
+def show_happy():
+    if (20<= event.x and event.x <= 350) and (20<= event.y and event.y <= 350):
+        c.itemconfigure(cheek_left , state = NORMAL)
+        c.itemconfigure()
     
+
 win = Tk()
 
 c = Canvas(win , width=400, height=400)
@@ -52,5 +86,9 @@ cheek_right = c.create_oval(
 
 
 c.pack()
+
+c.crossed_eyes = False
+c.tongue_out = False
+c.happy_level = 10
 
 win.mainloop()
