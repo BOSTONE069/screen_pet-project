@@ -44,7 +44,7 @@ def cheeky(event):
     win.after(1000,toggle_pupils)
     return
 
-def show_happy():
+def show_happy(event):
     if (20<= event.x and event.x <= 350) and (20<= event.y and event.y <= 350):
         c.itemconfigure(cheek_left , state = NORMAL)
         c.itemconfigure(cheek_right , state = NORMAL)
@@ -52,10 +52,10 @@ def show_happy():
         c.itemconfigure(mouth_normal , state = HIDDEN)
         c.itemconfigure(mouth_sad, state = HIDDEN)
         c.happy_level = 10
-return   
+    return   
 
 
-def hide_happy():
+def hide_happy(event):
     c.itemconfigure(cheek_left , state = HIDDEN)
     c.itemconfigure(cheek_right , state = HIDDEN)
     c.itemconfigure(mouth_happy , state = HIDDEN)
@@ -70,7 +70,7 @@ def sad():
         c.itemconfigure(mouth_sad , state = NORMAL)
     else:
         c.happy_level -= 1
-    win.after(5000)
+    win.after(500 , sad)
 
 
 
@@ -111,8 +111,16 @@ cheek_right = c.create_oval(
 
 c.pack()
 
+c.bind('<Motion>', show_happy)
+c.bind('<Leave>', hide_happy)
+c.bind('Double-1', cheeky)
+
+
 c.crossed_eyes = False
 c.tongue_out = False
 c.happy_level = 10
 
+
+win.after(1000,blink)
+win.after(5000,sad)
 win.mainloop()
