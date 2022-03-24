@@ -8,8 +8,8 @@ def toggle_eyes(): #This is a function for blinking the eyes
     new_state = NORMAL if current_state == HIDDEN else HIDDEN
     c.itemconfigure(pupil_left, state = new_state)
     c.itemconfigure(pupil_right, state=new_state)
-    c.itemconfigure(eye_left, state = new_color)
-    c.itemconfigure(eye_right, state=new_color)
+    c.itemconfigure(eye_left, fill = new_color)
+    c.itemconfigure(eye_right, fill = new_color)
 
 def blink():#This is a function for timing the blinking of the eyes
     toggle_eyes()
@@ -47,8 +47,32 @@ def cheeky(event):
 def show_happy():
     if (20<= event.x and event.x <= 350) and (20<= event.y and event.y <= 350):
         c.itemconfigure(cheek_left , state = NORMAL)
-        c.itemconfigure()
+        c.itemconfigure(cheek_right , state = NORMAL)
+        c.itemconfigure(mouth_happy , state = NORMAL)
+        c.itemconfigure(mouth_normal , state = HIDDEN)
+        c.itemconfigure(mouth_sad, state = HIDDEN)
+        c.happy_level = 10
+return   
+
+
+def hide_happy():
+    c.itemconfigure(cheek_left , state = HIDDEN)
+    c.itemconfigure(cheek_right , state = HIDDEN)
+    c.itemconfigure(mouth_happy , state = HIDDEN)
+    c.itemconfigure(mouth_normal , state = NORMAL)
+    c.itemconfigure(mouth_sad, state = HIDDEN)
+    return
     
+def sad():
+    if c.happy_level == 0:
+        c.itemconfigure(mouth_happy , state = HIDDEN)
+        c.itemconfigure(mouth_normal , state = HIDDEN)
+        c.itemconfigure(mouth_sad , state = NORMAL)
+    else:
+        c.happy_level -= 1
+    win.after(5000)
+
+
 
 win = Tk()
 
